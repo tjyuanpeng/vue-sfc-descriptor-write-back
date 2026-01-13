@@ -1,31 +1,60 @@
 # vue-sfc-descriptor-write-back
 
-@falconix fep 迁移工具
+A lightweight utility to parse Vue Single-File Components (SFC) and write modified SFCDescriptor back to the original source code, preserving non-block content (comments, whitespace) and maintaining correct offset positions.
 
-## 使用
+## Features
 
-```shell
-npx fep-migrator <...dir>
-```
+- Parse Vue SFC files into SFCDescriptor (powered by @vue/compiler-sfc)
+- Write modified SFCDescriptor back to the original source code
+- Preserve non-block content (comments, whitespace outside template/script/style)
+- Efficiently update only changed blocks using offset-based overwrites (via MagicString)
+- Type-safe API with full TypeScript support
 
-`dir` 为需要迁移的 fep 项目目录，支持多个目录同时迁移，例如：
-
-```shell
-fep-migrator src1 src2
-```
-
-可以使用glob语法排除掉文件夹，例如：
+## Installation
 
 ```shell
-fep-migrator src "!**/public"
+# pnpm (recommended)
+pnpm add vue-sfc-descriptor-write-back
+
+# npm
+npm install vue-sfc-descriptor-write-back
+
+# yarn
+yarn add vue-sfc-descriptor-write-back
 ```
 
-## 注意事项
+## Usage
 
-`fep-migrator` 会迁移两个包的内容：
+Parse a Vue SFC file, modify its descriptor, and write the changes back:
 
-- element-plus => @falconix/fep
+```ts
+import fs from 'node:fs'
+import { parse, writeBack } from 'vue-sfc-descriptor-write-back'
 
-- @element-plus/icons-vue => @falconix/icons-vue
+const parseResult = parse('./src/MyComponent.vue')
+const { errors, descriptor, code } = parseResult
+if (errors.length > 0) {
+  console.error('SFC parsing errors:', errors)
+  process.exit(1)
+}
 
-使用前请备份好文件，确保文件已经提交到git仓库
+if (descriptor.template) {
+  descriptor.template.content = `<div>Modified template content</div>`
+}
+
+const { hasChanged, code: resolvedCode } = writeBack(code, descriptor)
+
+if (hasChanged) {
+  fs.writeFileSync(filename, resolvedCode, 'utf-8')
+  console.log(`Successfully updated ${filename}`)
+}
+```
+
+## Acknowledgements
+
+- [vue-sfc-descriptor-to-string](https://github.com/psalaets/vue-sfc-descriptor-to-string)
+- [@vue/compiler-sfc](https://github.com/vuejs/core/tree/main/packages/compiler-sfc)
+
+## License
+
+MIT

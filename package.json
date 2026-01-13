@@ -23,6 +23,12 @@
     "stringify",
     "writeback"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -30,23 +36,17 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "start": "node dist/index.mjs",
-    "watch": "tsdown --watch --sourcemap",
-    "build": "tsdown --sourcemap",
+    "start": "tsdown --watch --dts",
+    "build": "tsdown --dts",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.5.26",
-    "cac": "^6.7.14",
-    "fep-migrator": "^1.0.0",
-    "globby": "^16.1.0",
-    "magic-string": "^0.30.21",
-    "oxc-parser": "^0.108.0"
+    "magic-string": "^0.30.21"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
-    "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.0.6",
     "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.2.0",

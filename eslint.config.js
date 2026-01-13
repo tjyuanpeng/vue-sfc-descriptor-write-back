@@ -3,6 +3,7 @@ import antfu from '@antfu/eslint-config'
 export default antfu({
   lessOpinionated: true,
   typescript: true,
+  type: 'lib',
   formatters: {
     css: true,
     html: true,
