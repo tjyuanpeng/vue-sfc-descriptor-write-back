@@ -1,0 +1,56 @@
+{
+  "name": "vue-sfc-descriptor-write-back",
+  "type": "module",
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.23.0",
+  "description": "writeback vue SFCDescriptor to sourcecode",
+  "author": "tjyuanpeng <tjyuanpeng@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/tjyuanpeng/vue-sfc-descriptor-write-back",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjyuanpeng/vue-sfc-descriptor-write-back.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tjyuanpeng/vue-sfc-descriptor-write-back/issues"
+  },
+  "keywords": [
+    "vue",
+    "sfc",
+    "descriptor",
+    "toString",
+    "parse",
+    "stringify",
+    "writeback"
+  ],
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "start": "node dist/index.mjs",
+    "watch": "tsdown --watch --sourcemap",
+    "build": "tsdown --sourcemap",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.5.26",
+    "cac": "^6.7.14",
+    "fep-migrator": "^1.0.0",
+    "globby": "^16.1.0",
+    "magic-string": "^0.30.21",
+    "oxc-parser": "^0.108.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^25.0.6",
+    "eslint": "^9.39.2",
+    "eslint-plugin-format": "^1.2.0",
+    "tsdown": "0.20.0-beta.1",
+    "typescript": "^5.9.3"
+  }
+}
