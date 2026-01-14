@@ -31,7 +31,7 @@ Parse a Vue SFC file, modify its descriptor, and write the changes back:
 import fs from 'node:fs'
 import { parse, writeBack } from 'vue-sfc-descriptor-write-back'
 
-const parseResult = parse('./src/MyComponent.vue', { cache: false })
+const parseResult = parse('./src/MyComponent.vue')
 const { errors, descriptor, code } = parseResult
 if (errors.length > 0) {
   console.error('SFC parsing errors:', errors)
