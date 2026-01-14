@@ -36,8 +36,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "start": "tsdown --watch --dts",
-    "build": "tsdown --dts",
+    "start": "tsdown --watch",
+    "build": "tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
@@ -48,9 +51,11 @@
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
     "@types/node": "^25.0.6",
+    "@vitest/coverage-v8": "^4.0.17",
     "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.2.0",
     "tsdown": "0.20.0-beta.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.17"
   }
 }

@@ -1,6 +1,6 @@
 import type { SFCDescriptor, SFCParseResult } from '@vue/compiler-sfc'
 import fs from 'node:fs'
-import { parse as parseSFC } from '@vue/compiler-sfc'
+import { parseCache, parse as parseSFC } from '@vue/compiler-sfc'
 import MagicString from 'magic-string'
 
 export interface ParseResult extends SFCParseResult {
@@ -12,8 +12,16 @@ export interface WriteBackResult {
   code: string
 }
 
-export const parse = (filename: string): ParseResult => {
+export interface ParseOptions {
+  disableCache: boolean
+}
+
+export const parse = (filename: string, options: undefined | ParseOptions = { disableCache: true }): ParseResult => {
   const code = fs.readFileSync(filename, { encoding: 'utf-8' })
+  // parse has a cache generating keys based on the code
+  if (options.disableCache) {
+    parseCache.clear()
+  }
   const result = parseSFC(code, {
     filename,
     sourceMap: false,
@@ -21,7 +29,7 @@ export const parse = (filename: string): ParseResult => {
   return { code, ...result }
 }
 
-export const writeBack = (code: string, descriptor: SFCDescriptor): { hasChanged: boolean, code: string } => {
+export const writeBack = (code: string, descriptor: SFCDescriptor): WriteBackResult => {
   const ms = new MagicString(code)
   const { template, script, scriptSetup, styles, customBlocks } = descriptor
   ;[template, script, scriptSetup, ...styles, ...customBlocks]
